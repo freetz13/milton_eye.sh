@@ -246,6 +246,12 @@ function delay_long {
     fi
 }
 
+function finish {
+  # Restore cursor
+  tput cnorm
+}
+
+trap finish EXIT
 
 DELAY_SHORT=0.15
 
@@ -253,8 +259,9 @@ DELAY_SHORT=0.15
 # TODO: get rid of it
 tput clear
 
-tput sc    # Save cursor position; restore later by `tput rc`
-tput bold  # Not sure, but looks better
+tput civis  # Hide cursor
+tput sc     # Save cursor position; restore later by `tput rc`
+tput bold   # Not sure, but looks better
 
 # Initial straight look
 draw_string_array "${EYE_CLOSED[@]}" ; sleep $DELAY_SHORT  ; tput rc
